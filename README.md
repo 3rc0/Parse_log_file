@@ -1,7 +1,7 @@
 # Parse_log_file
 Parsing Log Files for Secure/Auth Events in Linux OS
 
-- [X] Pasring the log file for ( User, Public Key, Password attempt, Failed Logins ) from secure or auth.log file.
+- [X] Parsing the log file for ( User, Public Key, Password attempt, Failed Logins ) from secure or auth.log file.
 - [X] The script works on Linux OS.
 - [X] Configure Cron Job to execute every Sunday at 4.05 AM.
 - [X] The output saving in the Report File.
