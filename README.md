@@ -36,7 +36,9 @@ if [[ -z "$SOURCE_FILE" ]]; then
     exit 1
 fi
 ....
-
+```
+The first portion is to indicate the file to be read and the second portion is to indicate the directory to be saved.
+```console
 "$SOURCE_FILE" >> "$TARGET_FILE"
 ```
 ## Part 2:
