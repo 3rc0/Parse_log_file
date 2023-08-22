@@ -80,7 +80,7 @@ END {
 ' "$SOURCE_FILE" >> "$TARGET_FILE"
 
 # Step 2: Setup a Cron job
-# Because the origin file from system with privilege permission for superuser only also keeping the data
-# with same attribute for case only authorized personnel to access to it.
+# Because the origin file from the system with privileged permission for superuser only also keeping the data
+# with the same attribute for cases only authorized personnel to access it.
 # sudo crontab -u root -e
 # 5 4 * * 0 /home/redhat/Desktop/parse_log_file.sh
