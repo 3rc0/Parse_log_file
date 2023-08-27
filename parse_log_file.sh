@@ -27,7 +27,6 @@ if [[ -z "$SOURCE_FILE" ]]; then
 fi
 
 awk '
-
 /Failed password|Accepted (password|publickey)/ && ( NF == 14 || NF == 16 ) {
         USERS[$9] = 1
         if ($0 ~ /publickey/) {
@@ -38,6 +37,7 @@ awk '
         }
     }
 
+
 /session (opened|closed)/ && ( NF == 11 || NF == 13 ) {
         sub(/\(.*/, "", $11)
         USERS[$11] = 1
@@ -45,8 +45,8 @@ awk '
 
 /authentication failure/ && ( NF == 15 ) {
         sub(/.*=/, "", $NF)
-        USERS[parts[8]] = 1
-        FAILED_LOGINS[parts[8]]++
+        USERS[$NF] = 1
+        FAILED_LOGINS[$NF]++
     }
 
 /Failure/ && ( NF == 15 ) {
@@ -61,7 +61,7 @@ END {
             printf "%-10s %-50s %-10s %-12s\n", USER, KEYS[USER], PASSWORD_ATTEMPT[USER], FAILED_LOGINS[USER]
         }
     }
-' "$SOURCE_FILE" >> "$TARGET_FILE"
+'  "$SOURCE_FILE" >> "$TARGET_FILE"
 
 # Step 2: Setup a Cron job
 # Because the origin file from the system with privileged permission for superuser only also keeping the data
