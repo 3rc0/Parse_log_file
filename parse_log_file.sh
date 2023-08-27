@@ -39,7 +39,7 @@ awk '
     }
 
 /session (opened|closed)/ && ( NF == 11 || NF == 13 ) {
-        sub(/\(.*/, " ", $11)
+        sub(/\(.*/, "", $11)
         USERS[$11] = 1
     }
 
