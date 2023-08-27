@@ -60,10 +60,8 @@ Aug  6 08:37:41 hpcl003 sshd[2326]: Accepted password for OPERA from xx.xx.xx.xx
 /Failed password|Accepted (password|publickey)/ && ( NF == 14 || NF == 16 ) {
         USERS[$9] = 1
         if ($0 ~ /publickey/) {
-            split($0, parts, ": ")
             KEYS[$9] = $16
         } else if ($0 ~ /Failed password/) {
-            split($0, parts, ": ")
             FAILED_LOGINS[$9]++
             PASSWORD_ATTEMPT[$9]++
         }
@@ -78,7 +76,7 @@ Aug  6 04:03:02 hpcl003 sshd[28580]: pam_unix(sshd:session): session closed for 
 ```
 ```console
 /session (opened|closed)/ && ( NF == 11 || NF == 13 ) {
-        gsub(/\(.*/, " ", $11)
+        sub(/\(.*/, "", $11)
         USERS[$11] = 1
     }
 ```
@@ -90,9 +88,9 @@ Aug  8 15:20:10 hpcl004 sshd[12345]: pam_sss(sshd:auth): authentication failure;
 ```
 ```console
 /authentication failure/ && ( NF == 15 ) {
-        split($0, parts, "=")
-        USERS[parts[8]] = 1
-        FAILED_LOGINS[parts[8]]++
+        sub(/.*=/, "", $NF)
+        USERS[$NF] = 1
+        FAILED_LOGINS[$NF]++
     }
 ```
 ### Fourth Condition    
