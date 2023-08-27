@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Shell Script for Parsing log file
-# Version v 2
+# Version v 3
 # Step 1: Parse log file:
 # A full path to get the logs /var/log/secure or /var/log/auth.log
 
@@ -31,22 +31,20 @@ awk '
 /Failed password|Accepted (password|publickey)/ && ( NF == 14 || NF == 16 ) {
         USERS[$9] = 1
         if ($0 ~ /publickey/) {
-            split($0, parts, ": ")
             KEYS[$9] = $16
         } else if ($0 ~ /Failed password/) {
-            split($0, parts, ": ")
             FAILED_LOGINS[$9]++
             PASSWORD_ATTEMPT[$9]++
         }
     }
 
 /session (opened|closed)/ && ( NF == 11 || NF == 13 ) {
-        gsub(/\(.*/, " ", $11)
+        sub(/\(.*/, " ", $11)
         USERS[$11] = 1
     }
 
 /authentication failure/ && ( NF == 15 ) {
-        split($0, parts, "=")
+        sub(/.*=/, "", $NF)
         USERS[parts[8]] = 1
         FAILED_LOGINS[parts[8]]++
     }
