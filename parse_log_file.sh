@@ -33,7 +33,7 @@ awk '
             KEYS[$9] = $16
         } else if ($0 ~ /Accepted password/) {
             PASSWORD_ATTEMPT[$9]++
-            }else if ($0 ~ /Failed password/) {
+        } else if ($0 ~ /Failed password/) {
             FAILED_LOGINS[$9]++
             PASSWORD_ATTEMPT[$9]++
         }
