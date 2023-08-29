@@ -57,10 +57,12 @@ Aug  6 04:03:01 hpcl003 sshd[28580]: Accepted publickey for OPERA from xx.xx.xx.
 Aug  6 08:37:41 hpcl003 sshd[2326]: Accepted password for OPERA from xx.xx.xx.xx port 36064 ssh2 
 ```
 ```console
-/Failed password|Accepted (password|publickey)/ && ( NF == 14 || NF == 16 ) {
+/Failed password|(Accepted password|Accepted publickey)/ && ( NF == 14 || NF == 16 ) {
         USERS[$9] = 1
         if ($0 ~ /publickey/) {
             KEYS[$9] = $16
+        } else if ($0 ~ /Accepted password/) {
+            PASSWORD_ATTEMPT[$9]++
         } else if ($0 ~ /Failed password/) {
             FAILED_LOGINS[$9]++
             PASSWORD_ATTEMPT[$9]++
