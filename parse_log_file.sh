@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Shell Script for Parsing log file
-# Version v 3
+# Version v 4
 # Step 1: Parse log file:
 # A full path to get the logs /var/log/secure or /var/log/auth.log
 
