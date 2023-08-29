@@ -27,16 +27,17 @@ if [[ -z "$SOURCE_FILE" ]]; then
 fi
 
 awk '
-/Failed password|Accepted (password|publickey)/ && ( NF == 14 || NF == 16 ) {
+/Failed password|(Accepted password|Accepted publickey)/ && ( NF == 14 || NF == 16 ) {
         USERS[$9] = 1
         if ($0 ~ /publickey/) {
             KEYS[$9] = $16
-        } else if ($0 ~ /Failed password/) {
+        } else if ($0 ~ /Accepted password/) {
+            PASSWORD_ATTEMPT[$9]++
+            }else if ($0 ~ /Failed password/) {
             FAILED_LOGINS[$9]++
             PASSWORD_ATTEMPT[$9]++
         }
     }
-
 
 /session (opened|closed)/ && ( NF == 11 || NF == 13 ) {
         sub(/\(.*/, "", $11)
